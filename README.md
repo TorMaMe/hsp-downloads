@@ -1,55 +1,66 @@
 # HSP for Windows
 
-[**Download HSP for Windows (64-bit)**](https://github.com/TorMaMe/hsp-downloads/releases/latest/download/HSP-Setup-x64.exe)
+[**Download HSP 0.1.14 for Windows (64-bit)**](https://github.com/TorMaMe/hsp-downloads/releases/latest/download/HSP-Setup-x64.exe)
 
-HSP uses hosted Qwen to interpret a scripture request, Bible quotation, or Biblical-event description, then projects the reference and requested version through VideoPsalm.
+HSP listens through your PC's microphone, sends speech to the hosted transcription and inference service, and projects accepted scripture references and versions through VideoPsalm.
 
 ## What the church PC needs
 
 - Windows 10 or 11, 64-bit.
-- VideoPsalm **1.29**, installed separately, with the Bible translations you want to use.
+- VideoPsalm **1.29**, with the Bible translations you want to use.
 - An internet connection and an API key supplied privately by your HSP administrator.
 - The external projection screen configured in VideoPsalm.
 
-You do not need Rust, Python, Node.js, the source code, or local inference models.
+You do not need Rust, Python, Node.js, source code, or local model downloads.
 
-## Install and set up
+## Install or update
 
-1. Download and run **HSP-Setup-x64.exe**. The installer installs HSP for your Windows account and handles WebView2 if it is missing.
+1. Close HSP and run **HSP-Setup-x64.exe** using the same Windows account as before. It updates the existing installation and retains the saved API key; uninstalling is unnecessary.
 2. Open **HSP** from the Start menu.
-3. On first launch, paste your API key into **API settings** and click **Save API key**. The app checks the key and saves it with Windows-account encryption. The key is not included in this download.
-The first API connection after idle can take a few minutes while the model starts.
+3. On first use, open **API settings**, paste your key, and click **Save API key**. The key is checked and saved using Windows-account encryption. It is not included in the download.
 
-4. Open VideoPsalm, show its Bibles panel, and turn its **Project** icon on.
-5. In HSP, click **Connect to VideoPsalm**.
-6. Enter text such as “Please show John 3:16 in NLT” and click **Project**.
+The installer includes the audio helper and installs WebView2 if it is missing.
+The first service connection after idle can take longer while the models start.
+
+## Listen and project
+
+1. Open VideoPsalm, show its Bibles panel, and turn its **Project** icon on.
+2. In HSP, click **Connect to VideoPsalm**.
+3. Click **Start** and wait for listening status.
+4. Speak naturally, for example: "Read John chapter three verse sixteen in New Living Translation."
+5. HSP displays what it heard and automatically projects accepted scripture results.
+6. Click **Stop** when finished. This stops microphone capture and discards waiting results without clearing the external display.
+
+A projection already underway may finish after Stop. Closing HSP also stops its audio helper.
+The default Windows microphone is used. Audio is uploaded while listening; this app does not save recordings or play audio.
+The shared service permits one active live-audio session at a time.
+
+## Manual text
+
+While listening is stopped, you can type a reference, quotation, or passage description into **Manual text**, then click **Project**.
+Later text such as "Use Amplified" can update the last projected verse.
+
+## Errors and versions
+
+- Projection errors appear in the UI while listening continues. The next accepted result is processed, and a successful projection clears the error.
+- Invalid individual scripture results are skipped. Failed or partial mouse actions are not automatically replayed.
+- If the microphone, network connection, or audio helper actually stops, address the displayed error and click **Start** for a fresh session.
+- HSP projects one verse at a time. A new scripture defaults to KJV unless another version is requested; later translation requests can update it.
+- The exact requested Bible version must be installed in VideoPsalm. KJV does not select NKJV; NLT does not substitute NLT15 or NLT2007.
+- If VideoPsalm restarts, stop listening and click **Connect** again.
+- Check the external screen to confirm audience output. The displayed timings do not measure the external monitor's rendering.
 
 Use the same Windows permission level for HSP and VideoPsalm. If VideoPsalm is running as administrator, ordinary HSP input may be blocked.
 
-## Current scope
-
-- This build projects one verse at a time.
-- The requested Bible version must be installed in VideoPsalm. Without an explicit version, inference defaults to KJV.
-- **Start/Stop** captures the microphone and shows its level. It does not transcribe audio or trigger automatic speech projection in this build.
-- The result shows inference and VideoPsalm timing. Check the external screen to confirm audience output.
-- If VideoPsalm restarts, click **Connect** again.
-
 ## Download details
 
-The installer is currently unsigned, so Windows may show an unknown-publisher or SmartScreen prompt. Check that you downloaded it from this repository. Each release includes **SHA256SUMS.txt** for integrity verification.
-
-To check a downloaded installer in PowerShell:
+The installer is unsigned, so Windows may show an unknown-publisher or SmartScreen prompt.
+Download from this repository. Each release includes **SHA256SUMS.txt** for verification:
 
 ```powershell
 Get-FileHash .\HSP-Setup-x64.exe -Algorithm SHA256
 ```
 
-Compare the hash with the installer entry in that release's SHA256SUMS.txt.
+Compare the hash with that release's installer entry in SHA256SUMS.txt.
 
-This repository contains Windows downloads and usage instructions. Application source and API credentials are not included.
-
-## Updating HSP
-
-Close HSP and run the latest installer using the same Windows account. It updates the existing installation and retains the saved API key. You do not need to uninstall first.
-
-If HSP says to check the external display after interrupted activation verification, projection may already be visible. HSP stops further clicks and never replays a partial click automatically.
+This repository contains downloads and usage instructions. Application source and API credentials are not included.
